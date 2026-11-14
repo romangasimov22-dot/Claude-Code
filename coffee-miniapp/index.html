@@ -71,7 +71,7 @@ document.getElementById('menu').addEventListener('click', e => {
 });
 
 function order() {
-  const items = MENU.filter(m => cart[m.id]).map(m => ({ id: m.id, qty: cart[m.id] }));
+  const items = MENU.filter(m => cart[m.id]).map(m => ({ id: m.id, name: m.name, qty: cart[m.id] }));
   const payload = JSON.stringify({ items, total: total() });
   if (tg.initData) tg.sendData(payload); // закриває апку і шле дані боту
   else alert('Тестове замовлення:\n' + payload);
