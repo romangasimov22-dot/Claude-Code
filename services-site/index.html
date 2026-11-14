@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevStudio — боти, міні-апи, сайти</title>
+<meta name="description" content="Створюю Telegram міні-апи, ботів та сайти для бізнесу і приватних клієнтів.">
+<style>
+  :root {
+    --bg: #0d1117; --bg2: #161b22; --text: #e6edf3; --muted: #8b949e;
+    --accent: #2aabee; --accent2: #7c5cff; --border: #30363d;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f7f9fc; --bg2: #ffffff; --text: #111827; --muted: #5b6472; --border: #e2e8f0; }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 72px 0; }
+  h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.15; }
+  h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 32px; text-align: center; }
+  .grad { background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .btn { display: inline-block; padding: 14px 26px; border-radius: 12px; font-weight: 600; text-decoration: none;
+         background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #fff; }
+  .btn.ghost { background: none; border: 1px solid var(--border); color: var(--text); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  nav .logo { font-weight: 800; text-decoration: none; }
+  nav ul { display: flex; gap: 24px; list-style: none; padding: 0; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover { color: var(--text); }
+  @media (max-width: 640px) { nav ul { display: none; } }
+
+  .hero { padding-top: 96px; text-align: center; }
+  .hero p { color: var(--muted); max-width: 640px; margin: 20px auto 32px; font-size: 1.1rem; }
+  .hero .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .card .ico { font-size: 2rem; }
+  .card h3 { margin: 12px 0 8px; }
+  .card p, .card li { color: var(--muted); }
+  .card ul { padding-left: 18px; margin-top: 10px; }
+
+  .price { font-size: 1.8rem; font-weight: 800; margin: 8px 0; }
+  .card.hot { border-color: var(--accent); }
+
+  .steps { counter-reset: s; }
+  .steps .card::before { counter-increment: s; content: counter(s); display: inline-grid; place-items: center;
+     width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; }
+
+  details { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { color: var(--muted); margin-top: 10px; }
+
+  .cta { text-align: center; }
+  .cta p { color: var(--muted); margin: -16px auto 28px; max-width: 520px; }
+  footer { border-top: 1px solid var(--border); padding: 24px 0; color: var(--muted); text-align: center; font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a class="logo" href="#">⚡ DevStudio</a>
+    <ul>
+      <li><a href="#services">Послуги</a></li>
+      <li><a href="#prices">Ціни</a></li>
+      <li><a href="#process">Як працюю</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <!-- TODO: заміни YOUR_USERNAME на свій Telegram-нік -->
+    <a class="btn" href="https://t.me/YOUR_USERNAME" style="padding:8px 16px">Написати</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <h1>Telegram міні-апи, боти<br>та <span class="grad">сайти під ключ</span></h1>
+    <p>Допомагаю бізнесу та звичайним людям автоматизувати продажі, запис і спілкування з клієнтами — швидко, сучасно та без зайвих витрат.</p>
+    <div class="actions">
+      <a class="btn" href="https://t.me/YOUR_USERNAME">Обговорити проєкт</a>
+      <a class="btn ghost" href="#services">Що я роблю</a>
+    </div>
+  </section>
+
+  <section id="services" class="wrap">
+    <h2>Послуги</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="ico">📱</div>
+        <h3>Telegram Mini Apps</h3>
+        <p>Повноцінний застосунок прямо в Telegram: магазин, меню кафе, запис на послуги, каталог.</p>
+        <ul><li>Оплата в Telegram</li><li>Кошик і замовлення</li><li>Адмін-панель</li></ul>
+      </div>
+      <div class="card">
+        <div class="ico">🤖</div>
+        <h3>Telegram-боти</h3>
+        <p>Боти для заявок, підтримки, розсилок, продажу курсів і автоматизації рутини.</p>
+        <ul><li>Прийом заявок</li><li>Розсилки та сповіщення</li><li>Інтеграція з CRM / Google Sheets</li></ul>
+      </div>
+      <div class="card">
+        <div class="ico">🌐</div>
+        <h3>Сайти</h3>
+        <p>Лендінги, сайти-візитки, портфоліо та невеликі інтернет-магазини з адаптивом під телефон.</p>
+        <ul><li>Сучасний дизайн</li><li>Швидке завантаження</li><li>Форми та аналітика</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="prices" class="wrap">
+    <h2>Ціни</h2>
+    <!-- TODO: підстав свої ціни -->
+    <div class="grid">
+      <div class="card">
+        <h3>Старт</h3>
+        <div class="price">від $50</div>
+        <p>Простий бот або сайт-візитка.</p>
+        <ul><li>До 5 команд / 1 сторінка</li><li>Термін: 3–5 днів</li><li>Запуск і налаштування</li></ul>
+      </div>
+      <div class="card hot">
+        <h3>Бізнес 🔥</h3>
+        <div class="price">від $150</div>
+        <p>Бот з адмінкою або лендінг під продажі.</p>
+        <ul><li>База даних, розсилки</li><li>Термін: 1–2 тижні</li><li>Місяць підтримки</li></ul>
+      </div>
+      <div class="card">
+        <h3>Mini App</h3>
+        <div class="price">від $300</div>
+        <p>Повноцінний застосунок у Telegram.</p>
+        <ul><li>Каталог, кошик, оплата</li><li>Термін: 2–4 тижні</li><li>Адмін-панель</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" class="wrap">
+    <h2>Як я працюю</h2>
+    <div class="grid steps">
+      <div class="card"><h3>Заявка</h3><p>Пишете в Telegram, обговорюємо ідею та задачі.</p></div>
+      <div class="card"><h3>План і ціна</h3><p>Складаю ТЗ, фіксуємо терміни та вартість.</p></div>
+      <div class="card"><h3>Розробка</h3><p>Показую проміжні результати, вносимо правки.</p></div>
+      <div class="card"><h3>Запуск</h3><p>Розгортаю проєкт і допомагаю з підтримкою.</p></div>
+    </div>
+  </section>
+
+  <section id="faq" class="wrap">
+    <h2>Питання</h2>
+    <details><summary>Чи потрібно мені розбиратися в коді?</summary><p>Ні. Я все налаштую, а вам дам просту інструкцію або адмін-панель.</p></details>
+    <details><summary>Як відбувається оплата?</summary><p>Зазвичай 50% передоплата і 50% після здачі проєкту.</p></details>
+    <details><summary>Що таке Telegram Mini App?</summary><p>Це сайт, що відкривається всередині Telegram як застосунок — клієнту не треба нічого встановлювати.</p></details>
+    <details><summary>Чи можна замовити лише правки до існуючого бота чи сайту?</summary><p>Так, беруся за доопрацювання та виправлення помилок.</p></details>
+  </section>
+
+  <section class="cta wrap">
+    <h2>Маєте ідею?</h2>
+    <p>Напишіть мені — відповім протягом дня і безкоштовно оціню проєкт.</p>
+    <a class="btn" href="https://t.me/YOUR_USERNAME">✈️ Написати в Telegram</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 DevStudio · Боти, міні-апи та сайти</div>
+</footer>
+
+</body>
+</html>
