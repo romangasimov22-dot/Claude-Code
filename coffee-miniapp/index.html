@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Кавʼярня</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  body { margin: 0; padding: 12px 12px 90px; font: 16px system-ui, sans-serif;
+    background: var(--tg-theme-bg-color, #fff); color: var(--tg-theme-text-color, #000); }
+  h1 { font-size: 22px; margin: 4px 0 12px; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 10px; margin-bottom: 8px;
+    border-radius: 12px; background: var(--tg-theme-secondary-bg-color, #f1f1f1); }
+  .emoji { font-size: 32px; }
+  .info { flex: 1; }
+  .price { color: var(--tg-theme-hint-color, #888); font-size: 14px; }
+  .qty { display: flex; align-items: center; gap: 8px; }
+  button.q { width: 32px; height: 32px; border: 0; border-radius: 50%; font-size: 18px;
+    background: var(--tg-theme-button-color, #2481cc); color: var(--tg-theme-button-text-color, #fff); }
+  #fallback { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; padding: 14px; border: 0;
+    border-radius: 12px; font-size: 16px; background: #2481cc; color: #fff; }
+</style>
+</head>
+<body>
+<h1>☕ Кавʼярня «Зерно»</h1>
+<div id="menu"></div>
+<button id="fallback">Замовити</button>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready(); tg.expand();
+
+const MENU = [
+  { id: 'espresso',   name: 'Еспресо',    emoji: '☕', price: 50 },
+  { id: 'americano',  name: 'Американо',   emoji: '🫖', price: 60 },
+  { id: 'cappuccino', name: 'Капучино',    emoji: '🥛', price: 75 },
+  { id: 'latte',      name: 'Лате',        emoji: '🧋', price: 80 },
+  { id: 'raf',        name: 'Раф',         emoji: '🍯', price: 95 },
+  { id: 'croissant',  name: 'Круасан',     emoji: '🥐', price: 65 },
+  { id: 'cheesecake', name: 'Чізкейк',     emoji: '🍰', price: 110 },
+];
+const cart = {}; // id -> кількість
+
+const total = () => MENU.reduce((s, m) => s + m.price * (cart[m.id] || 0), 0);
+
+function render() {
+  document.getElementById('menu').innerHTML = MENU.map(m => `
+    <div class="item">
+      <div class="emoji">${m.emoji}</div>
+      <div class="info">${m.name}<div class="price">${m.price} ₴</div></div>
+      <div class="qty">
+        <button class="q" data-id="${m.id}" data-d="-1">−</button>
+        <span>${cart[m.id] || 0}</span>
+        <button class="q" data-id="${m.id}" data-d="1">+</button>
+      </div>
+    </div>`).join('');
+  const sum = total(), btn = tg.MainButton;
+  if (sum > 0) { btn.setText(`Замовити · ${sum} ₴`); btn.show(); } else btn.hide();
+  // поза Telegram MainButton не видно — показуємо звичайну кнопку для тесту
+  const fb = document.getElementById('fallback');
+  fb.style.display = !tg.initData && sum > 0 ? 'block' : 'none';
+  fb.textContent = `Замовити · ${sum} ₴`;
+}
+
+document.getElementById('menu').addEventListener('click', e => {
+  const b = e.target.closest('button.q'); if (!b) return;
+  const id = b.dataset.id;
+  cart[id] = Math.max(0, (cart[id] || 0) + +b.dataset.d);
+  tg.HapticFeedback?.impactOccurred('light');
+  render();
+});
+
+function order() {
+  const items = MENU.filter(m => cart[m.id]).map(m => ({ id: m.id, qty: cart[m.id] }));
+  const payload = JSON.stringify({ items, total: total() });
+  if (tg.initData) tg.sendData(payload); // закриває апку і шле дані боту
+  else alert('Тестове замовлення:\n' + payload);
+}
+tg.MainButton.onClick(order);
+document.getElementById('fallback').onclick = order;
+
+render();
+</script>
+</body>
+</html>
